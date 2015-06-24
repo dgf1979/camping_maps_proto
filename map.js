@@ -1,6 +1,7 @@
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
+var markers = [];
 
 
 var testCampsite1 = new google.maps.LatLng(37.50959, -109.654022);
@@ -8,6 +9,7 @@ var testCampsite2 = new google.maps.LatLng(40.742445, -113.002968);
 var testCampsite3 = new google.maps.LatLng(29.047225, -81.509146);
 var testCampsite4 = new google.maps.LatLng(41.292061, -99.922928);
 var campSites = [testCampsite1, testCampsite2, testCampsite3, testCampsite4];
+var waypts = [];
 
 console.log(campSites.length);
 
@@ -22,19 +24,33 @@ function initialize() {
   };
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   directionsDisplay.setMap(map);
+
+  calcRoute();
 }
+
+
 
 function calcRoute() {
   console.log("calcRoute");
-  var start = "detroit, mi";
-  var end = "portland, or";
+
+  var end = "detroit, mi";
+  var start = "portland, or";
   var request = {
     origin:start,
+    waypoints: waypts,
+    optimizeWaypoints: true,
     destination:end,
     travelMode: google.maps.TravelMode.DRIVING
   };
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
+
+      if (typeof directionsDisplay === "undefined") {
+        console.log("undefined");
+      } else {
+        console.log("status ok");
+      }
+
       directionsDisplay.setDirections(response);
 
       var path = response.routes[0].overview_path;
@@ -46,6 +62,7 @@ function calcRoute() {
       for (i = 1; i <= stops; i++) {
         var stop = path[i * stopAtEvery];
         addMarkerAt(stop);
+        markers.push(stop);
         console.log ("setting marker # " + i);
         campSitesInRange(stop);
       }
@@ -72,7 +89,16 @@ function addTentMarkerAt(latlong) {
     map: map,
     icon: tentIcon
   });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    map.setZoom(8);
+    waypts.push({location: marker.getPosition(), stopover: true})
+    map.setCenter(marker.getPosition());
+    markers = [];
+    calcRoute();
+  });
 }
+
 
 function distanceBetween(pointA, pointB) {
   var distanceBetween = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
@@ -99,6 +125,6 @@ function campSitesInRange(latlong) {
 
 
 
-google.maps.event.addDomListener(window, 'load', initialize);
 
-calcRoute();
+
+google.maps.event.addDomListener(window, 'load', initialize);
