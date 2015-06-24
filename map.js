@@ -2,6 +2,16 @@ var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 
+var testCampsite1 = new google.maps.LatLng(37.50959, -109.654022);
+var testCampsite2 = new google.maps.LatLng(40.742445, -113.002968);
+var testCampsite3 = new google.maps.LatLng(29.047225, -81.509146);
+
+var distanceBetween = google.maps.geometry.spherical.computeDistanceBetween(testCampsite1, testCampsite2);
+var distanceInMiles = Math.round(distanceBetween * .000621371);
+
+
+console.log(distanceInMiles);
+
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
   var chicago = new google.maps.LatLng(41.850033, -87.6500523);
