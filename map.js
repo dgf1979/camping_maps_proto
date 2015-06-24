@@ -2,9 +2,16 @@ var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 
+
 var testCampsite1 = new google.maps.LatLng(37.50959, -109.654022);
 var testCampsite2 = new google.maps.LatLng(40.742445, -113.002968);
 var testCampsite3 = new google.maps.LatLng(29.047225, -81.509146);
+var testCampsite4 = new google.maps.LatLng(41.292061, -99.922928);
+var campSites = [testCampsite1, testCampsite2, testCampsite3, testCampsite4];
+
+console.log(campSites.length);
+
+var maxMiles = 100;
 
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
@@ -36,22 +43,13 @@ function calcRoute() {
       var days = stops + 1;
       var stopAtEvery = Math.floor(path.length / days);
 
-
       for (i = 1; i <= stops; i++) {
-        addMarkerAt(path[i * stopAtEvery]);
+        var stop = path[i * stopAtEvery];
+        addMarkerAt(stop);
         console.log ("setting marker # " + i);
-
-        console.log(distanceBetween(path[i * stopAtEvery], testCampsite1));
-
+        campSitesInRange(stop);
       }
 
-      addTentMarkerAt(testCampsite1);
-      addTentMarkerAt(testCampsite2);
-      addTentMarkerAt(testCampsite3);
-
-      // for (i = 0; i < path.length; i++) {
-      //   addMarkerAt(path[i]);
-      // }
     }
   });
 }
@@ -82,6 +80,24 @@ function distanceBetween(pointA, pointB) {
   console.log("distance between " + pointA + " and " + pointB + " is " + distanceInMiles + " miles.");
   return distanceInMiles;
 }
+
+function campSitesInRange(latlong) {
+  console.log("campSitesInRange with: " + latlong);
+  var campingOptions = [];
+  console.log(campSites.length);
+  for (var i=0; i < campSites.length; i++) {
+    console.log(i);
+    var distance = distanceBetween(campSites[i], latlong);
+    if (distance <= maxMiles) {
+      addTentMarkerAt(campSites[i]);
+      campingOptions.push(campSites[i]);
+    }
+    console.log(campingOptions);
+  }
+  // return campingOptions;
+}
+
+
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
