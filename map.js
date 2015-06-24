@@ -28,9 +28,17 @@ function calcRoute() {
 
       var path = response.routes[0].overview_path;
 
-      for (i = 0; i < path.length; i++) {
-        addMarkerAt(path[i]);
+      var stops = 2;
+      var days = stops + 1;
+      var stopAtEvery = Math.floor(path.length / days);
+
+      for (i = 1; i <= stops; i++) {
+        addMarkerAt(path[i * stopAtEvery]);
       }
+
+      // for (i = 0; i < path.length; i++) {
+      //   addMarkerAt(path[i]);
+      // }
     }
   });
 }
