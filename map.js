@@ -133,7 +133,9 @@ function campSitesInRange(latlong, stops) {
     return
   }
 
-    var stopDiv = '<h4 class="waypoint-title">Waypoint ' + (alreadyBuilt + 1) + '</h4><select multiple="multiple" onchange="updatewaypoints();" class=" select select-waypoint" id="' + latlong + '">';
+  // <h4 class="waypoint-title">Waypoint ' + (alreadyBuilt + 1) + '</h4>
+
+    var stopDiv = '<select multiple="multiple" onchange="updatewaypoints();" class=" select select-waypoint" id="' + latlong + '">';
 
     console.log("campSitesInRange with: " + latlong);
     var campingOptions = [];
