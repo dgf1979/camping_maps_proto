@@ -3,11 +3,22 @@
     <title>Map Proto</title>
 
     <style>
-    html, body, #map-canvas {
+    html, body {
+      width: 100%;
+    }
+
+    #map-canvas {
       height: 600px;
       width: 800px;
       margin: 0px;
-      padding: 0px
+      padding: 0px;
+      display: inline-block;
+    }
+
+
+    #stops {
+      vertical-align: top;
+      display: inline-block;
     }
 
 
@@ -24,9 +35,11 @@
     </style>
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js" charset="utf-8"></script>
     <script src="map.js" charset="utf-8"></script>
   </head>
   <body>
     <div id="map-canvas"></div>
+    <div id="stops"></div>
   </body>
 </html>
