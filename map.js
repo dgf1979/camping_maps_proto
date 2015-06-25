@@ -133,7 +133,7 @@ function campSitesInRange(latlong, stops) {
     return
   }
 
-    var stopDiv = '<br><select multiple="multiple" onchange="updatewaypoints();" class="select-waypoint" id="' + latlong + '">';
+    var stopDiv = '<h4 class="waypoint-title">Waypoint ' + (alreadyBuilt + 1) + '</h4><select multiple="multiple" onchange="updatewaypoints();" class=" select select-waypoint" id="' + latlong + '">';
 
     console.log("campSitesInRange with: " + latlong);
     var campingOptions = [];
@@ -149,7 +149,7 @@ function campSitesInRange(latlong, stops) {
       }
       console.log(campingOptions);
     }
-    stopDiv += '</select><br>';
+    stopDiv += '</select>';
     console.log(stopDiv);
     $("#stops").append(stopDiv);
 }
